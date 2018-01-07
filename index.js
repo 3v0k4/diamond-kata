@@ -1,3 +1,3 @@
-const isFive = number => number === 5
+const make = char => 'whatever'
 
-module.exports = isFive
+module.exports = make
