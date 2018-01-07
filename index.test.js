@@ -26,6 +26,12 @@ const rowsContainsCorrectLetters = (char, diamond) => {
   const actual = diamond.split('\n').map(row => row.trim())
   return expected.join() === actual.join()
 }
+const hasLength = length => string => string.length === length
+const rowsAreAsWideAsHigh = diamond => {
+  const rows = diamond.split('\n')
+  const height = rows.length
+  return rows.map(hasLength(height)).reduce((acc, x) => acc && x)
+}
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
@@ -33,4 +39,5 @@ describe('diamond', () => {
   jsc.property('last row contains A', char, c => lastRow(make(c)).trim() === 'A')
   jsc.property('rows have symmetrical contour', char, c => rowsHaveSymmetricalContour(make(c)))
   jsc.property('rows contains the correct letters', char, c => rowsContainsCorrectLetters(c, make(c)))
+  jsc.property('rows are as wide as high', char, c => rowsAreAsWideAsHigh(make(c)))
 })
