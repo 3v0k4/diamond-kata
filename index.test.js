@@ -12,14 +12,23 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 const char = jsc.suchthat(jsc.asciichar, c => alphabet.includes(c))
 const firstRow = string => string.split('\n')[0]
 const lastRow = string => string.split('\n')[string.split('\n').length - 1]
+const leading = (char, string) => {
+  const index = string.indexOf(char)
+  return string.slice(0, index)
+}
+const trailing = (char, string) => {
+  const index = string.indexOf(char)
+  return string.slice(index + 1)
+}
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
   jsc.property('first row contains A', char, c => firstRow(make(c)).trim() === 'A')
   jsc.property('last row contains A', char, c => lastRow(make(c)).trim() === 'A')
   jsc.property('first row has symmetrical contour', char, c => {
-    const row = firstRow(make(c))
-    const index = row.indexOf('A')
-    return row.slice(0, index).length === row.slice(index + 1).length
+    const diamond = make(c)
+    const leadingElements = leading('A', firstRow(diamond)).length
+    const trailingElements = trailing('A', firstRow(diamond)).length
+    return leadingElements === trailingElements
   })
 })
