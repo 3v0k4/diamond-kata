@@ -1,3 +1,3 @@
-const make = char => '        A       '
+const make = char => '       A       '
 
 module.exports = make
