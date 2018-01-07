@@ -20,11 +20,13 @@ const trailing = (char, string) => {
   const index = string.indexOf(char)
   return string.slice(index + 1)
 }
-const firstRowHasSymmetricalContour = diamond => {
-  const leadingElements = leading('A', firstRow(diamond)).length
-  const trailingElements = trailing('A', firstRow(diamond)).length
+const rowHasSymmetricalContour = row => {
+  const leadingElements = leading('A', row).length
+  const trailingElements = trailing('A', row).length
   return leadingElements === trailingElements
 }
+const firstRowHasSymmetricalContour = diamond =>
+  diamond.split('\n').map(rowHasSymmetricalContour)[0]
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
