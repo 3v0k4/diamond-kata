@@ -25,12 +25,18 @@ const rowHasSymmetricalContour = row => {
   const trailingElements = trailing(row).length
   return leadingElements === trailingElements
 }
-const firstRowHasSymmetricalContour = diamond =>
-  diamond.split('\n').map(rowHasSymmetricalContour)[0]
+const rowsHaveSymmetricalContour = diamond =>
+  diamond.split('\n').map(rowHasSymmetricalContour).reduce((acc, x) => acc && x)
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
   jsc.property('first row contains A', char, c => firstRow(make(c)).trim() === 'A')
   jsc.property('last row contains A', char, c => lastRow(make(c)).trim() === 'A')
-  jsc.property('first row has symmetrical contour', char, c => firstRowHasSymmetricalContour(make(c)))
+  jsc.property('rows have symmetrical contour', char, c => rowsHaveSymmetricalContour(make(c)))
+  jsc.property('top rows including the middle one contains the correct letters', char, c => {
+    const diamond = make(c)
+    const chars = alphabet.slice(0, alphabet.indexOf(c) + 1)
+    const charsInDiamond = diamond.split('\n').map(row => row.trim())
+    return chars.join() === charsInDiamond.join()
+  })
 })
