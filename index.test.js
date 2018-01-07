@@ -13,19 +13,10 @@ const alphabetUntilBefore = char => alphabet.slice(0, alphabet.indexOf(char))
 const char = jsc.suchthat(jsc.asciichar, c => alphabet.includes(c))
 const firstRow = string => string.split('\n')[0]
 const lastRow = string => string.split('\n')[string.split('\n').length - 1]
-const leading = string => {
-  const index = string.search(/[A-Z]/)
-  return string.slice(0, index)
-}
-const trailing = string => {
-  const index = string.search(/[A-Z]/)
-  return string.slice(index + 1)
-}
-const rowHasSymmetricalContour = row => {
-  const leadingElements = leading(row).length
-  const trailingElements = trailing(row).length
-  return leadingElements === trailingElements
-}
+const indexOfChar = string => string.search(/[A-Z]/)
+const leading = string => string.slice(0, indexOfChar(string))
+const trailing = string => string.slice(indexOfChar(string) + 1)
+const rowHasSymmetricalContour = row => leading(row).length === trailing(row).length
 const rowsHaveSymmetricalContour = diamond =>
   diamond.split('\n').map(rowHasSymmetricalContour).reduce((acc, x) => acc && x)
 
