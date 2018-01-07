@@ -11,27 +11,27 @@ const debug = x => {
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 const alphabetUntilBefore = char => alphabet.slice(0, alphabet.indexOf(char))
 const char = jsc.suchthat(jsc.asciichar, c => alphabet.includes(c))
-const firstRow = string => string.split('\n')[0]
-const lastRow = string => string.split('\n')[string.split('\n').length - 1]
+const rows = string => string.split('\n')
+const firstRow = string => rows(string)[0]
+const lastRow = string => rows(string)[rows(string).length - 1]
 const indexOfFirstChar = string => string.search(/[A-Z]/)
 const indexOfLastChar = string => (string.length - 1) - (string.split('').reverse().join('').search(/[A-Z]/))
 const leading = string => string.slice(0, indexOfFirstChar(string))
 const trailing = string => string.slice(indexOfLastChar(string) + 1)
 const rowHasSymmetricalContour = row => leading(row).length === trailing(row).length
 const rowsHaveSymmetricalContour = diamond =>
-  diamond.split('\n').map(rowHasSymmetricalContour).reduce((acc, x) => acc && x)
+  rows(diamond).map(rowHasSymmetricalContour).reduce((acc, x) => acc && x)
 const rowsContainsCorrectLetters = (char, diamond) => {
   const pre = alphabetUntilBefore(char)
   const post = pre.slice().reverse()
   const expected = pre.concat([char]).concat(post)
-  const actual = diamond.split('\n').map(row => row.trim()[0])
+  const actual = rows(diamond).map(row => row.trim()[0])
   return expected.join() === actual.join()
 }
 const hasLength = length => string => string.length === length
 const rowsAreAsWideAsHigh = diamond => {
-  const rows = diamond.split('\n')
-  const height = rows.length
-  return rows.map(hasLength(height)).reduce((acc, x) => acc && x)
+  const height = rows(diamond).length
+  return rows(diamond).map(hasLength(height)).reduce((acc, x) => acc && x)
 }
 
 describe('diamond', () => {
