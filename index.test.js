@@ -3,6 +3,11 @@ const mocha = require('mocha')
 
 const isFive = require('./index')
 
-describe('TODO', () => {
-  jsc.property('TODO', jsc.constant(5), isFive)
+const debug = x => {
+  console.log(x)
+  return true;
+}
+
+describe('diamond', () => {
+  jsc.property('is not empty', jsc.asciichar, debug)
 })
