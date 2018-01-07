@@ -19,8 +19,9 @@ const indexOfLastChar = string => (string.length - 1) - (string.split('').revers
 const leading = string => string.slice(0, indexOfFirstChar(string))
 const trailing = string => string.slice(indexOfLastChar(string) + 1)
 const rowHasSymmetricalContour = row => leading(row).length === trailing(row).length
+const all = xs => xs.reduce((acc, x) => acc && x)
 const rowsHaveSymmetricalContour = diamond =>
-  rows(diamond).map(rowHasSymmetricalContour).reduce((acc, x) => acc && x)
+  all(rows(diamond).map(rowHasSymmetricalContour))
 const rowsContainsCorrectLetters = (char, diamond) => {
   const pre = alphabetUntilBefore(char)
   const post = pre.slice().reverse()
@@ -31,7 +32,7 @@ const rowsContainsCorrectLetters = (char, diamond) => {
 const hasLength = length => string => string.length === length
 const rowsAreAsWideAsHigh = diamond => {
   const height = rows(diamond).length
-  return rows(diamond).map(hasLength(height)).reduce((acc, x) => acc && x)
+  return all(rows(diamond).map(hasLength(height)))
 }
 
 describe('diamond', () => {
