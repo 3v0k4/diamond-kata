@@ -23,7 +23,7 @@ const rowsContainsCorrectLetters = (char, diamond) => {
   const pre = alphabetUntilBefore(char)
   const post = pre.slice().reverse()
   const expected = pre.concat([char]).concat(post)
-  const actual = diamond.split('\n').map(row => row.trim())
+  const actual = diamond.split('\n').map(row => row.trim()[0])
   return expected.join() === actual.join()
 }
 const hasLength = length => string => string.length === length
