@@ -12,17 +12,17 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 const char = jsc.suchthat(jsc.asciichar, c => alphabet.includes(c))
 const firstRow = string => string.split('\n')[0]
 const lastRow = string => string.split('\n')[string.split('\n').length - 1]
-const leading = (char, string) => {
-  const index = string.indexOf(char)
+const leading = string => {
+  const index = string.search(/[A-Z]/)
   return string.slice(0, index)
 }
-const trailing = (char, string) => {
-  const index = string.indexOf(char)
+const trailing = string => {
+  const index = string.search(/[A-Z]/)
   return string.slice(index + 1)
 }
 const rowHasSymmetricalContour = row => {
-  const leadingElements = leading('A', row).length
-  const trailingElements = trailing('A', row).length
+  const leadingElements = leading(row).length
+  const trailingElements = trailing(row).length
   return leadingElements === trailingElements
 }
 const firstRowHasSymmetricalContour = diamond =>
