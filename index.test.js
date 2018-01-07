@@ -19,7 +19,7 @@ const indexOfLastChar = string => (string.length - 1) - (string.split('').revers
 const leading = string => string.slice(0, indexOfFirstChar(string))
 const trailing = string => string.slice(indexOfLastChar(string) + 1)
 const rowHasSymmetricalContour = row => leading(row).length === trailing(row).length
-const all = xs => xs.reduce((acc, x) => acc && x)
+const all = xs => xs.reduce((acc, x) => acc && x, true)
 const rowsHaveSymmetricalContour = diamond =>
   all(rows(diamond).map(rowHasSymmetricalContour))
 const rowsContainsCorrectLetters = (char, diamond) => {
@@ -34,6 +34,14 @@ const rowsAreAsWideAsHigh = diamond => {
   const height = rows(diamond).length
   return all(rows(diamond).map(hasLength(height)))
 }
+const hasTwoIdenticalLetters = string => {
+  const trimmed = string.replace(/\s/g, '')
+  return trimmed.length === 2 && trimmed[0] === trimmed[1]
+}
+const internalRowsHaveTwoIdenticalLetters = diamond => {
+  const internalRows = rows(diamond).slice(1, rows(diamond).length - 2)
+  return all(internalRows.map(hasTwoIdenticalLetters))
+}
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
@@ -42,4 +50,5 @@ describe('diamond', () => {
   jsc.property('rows have symmetrical contour', char, c => rowsHaveSymmetricalContour(make(c)))
   jsc.property('rows contains the correct letters', char, c => rowsContainsCorrectLetters(c, make(c)))
   jsc.property('rows are as wide as high', char, c => rowsAreAsWideAsHigh(make(c)))
+  jsc.property('rows except top and bottom have two identical letters', char, c => internalRowsHaveTwoIdenticalLetters(make(c)))
 })

@@ -6,7 +6,8 @@ const makeRow = width => char => {
     const padding = ' '.repeat(width / 2)
     return `${padding}A${padding}`
   } else {
-    return char.repeat(width)
+    const padding = ' '.repeat(width - 2)
+    return `${char}${padding}${char}`
   }
 }
 
