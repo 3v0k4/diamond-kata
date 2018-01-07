@@ -13,4 +13,5 @@ const char = jsc.suchthat(jsc.asciichar, c => alphabet.includes(c))
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
+  jsc.property('first row contains A', char, c => make(c).split('\n')[0].trim() === 'A')
 })
