@@ -1,0 +1,23 @@
+{
+  "name": "diamond-kata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/3v0k4/diamond-kata.git"
+  },
+  "author": "3v0k4 (Riccardo Odone)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3v0k4/diamond-kata/issues"
+  },
+  "homepage": "https://github.com/3v0k4/diamond-kata#readme",
+  "devDependencies": {
+    "jsverify": "^0.8.3",
+    "mocha": "^4.1.0"
+  }
+}
