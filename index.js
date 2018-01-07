@@ -1,7 +1,10 @@
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+const alphabetUntilBefore = char => alphabet.slice(0, alphabet.indexOf(char))
 
 const make = char => {
-  const chars = alphabet.slice(0, alphabet.indexOf(char) + 1)
+  const pre = alphabetUntilBefore(char)
+  const post = pre.slice().reverse()
+  const chars = pre.concat([char]).concat(post)
   return chars.join('\n')
 }
 
