@@ -42,6 +42,20 @@ const internalRowsHaveTwoIdenticalLetters = diamond => {
   const internalRows = rows(diamond).slice(1, rows(diamond).length - 2)
   return all(internalRows.map(hasTwoIdenticalLetters))
 }
+const firstChar = row => row.trim()[0]
+const expectedInternalSpaces = row => {
+  const char = row.match(/[A-Z]/)[0]
+  const index = alphabet.indexOf(char)
+  return Math.max((index * 2) - 1, 0)
+}
+const internalSpaces = row => {
+  const match = row.match(/[A-Z](\s*)[A-Z]/)
+  return match ? match[1].length : 0;
+}
+const hasCorrectAmountOfInternalSpaces = row =>
+  internalSpaces(row) === expectedInternalSpaces(row)
+const rowsHaveCorrectAmountOfInternalSpaces = diamond =>
+  all(rows(diamond).map(hasCorrectAmountOfInternalSpaces))
 
 describe('diamond', () => {
   jsc.property('is not empty', char, c => make(c).length !== 0)
@@ -51,4 +65,5 @@ describe('diamond', () => {
   jsc.property('rows contains the correct letters', char, c => rowsContainsCorrectLetters(c, make(c)))
   jsc.property('rows are as wide as high', char, c => rowsAreAsWideAsHigh(make(c)))
   jsc.property('rows except top and bottom have two identical letters', char, c => internalRowsHaveTwoIdenticalLetters(make(c)))
+  jsc.property('rows have the correct amount of internal spaces', char, c => rowsHaveCorrectAmountOfInternalSpaces(make(c)))
 })
