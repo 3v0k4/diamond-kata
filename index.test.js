@@ -22,11 +22,12 @@ const rowHasSymmetricalContour = row => leading(row).length === trailing(row).le
 const all = xs => xs.reduce((acc, x) => acc && x, true)
 const rowsHaveSymmetricalContour = diamond =>
   all(rows(diamond).map(rowHasSymmetricalContour))
+const uniq = xs => xs.reduce((acc, x) => acc.includes(x) ? acc : acc.concat([x]), []);
 const rowsContainsCorrectLetters = (char, diamond) => {
   const pre = alphabetUntilBefore(char)
   const post = pre.slice().reverse()
   const expected = pre.concat([char]).concat(post)
-  const actual = rows(diamond).map(row => row.trim()[0])
+  const actual = rows(diamond).map(row => uniq(row.replace(/\s/g, '').split('')).join(''))
   return expected.join() === actual.join()
 }
 const hasLength = length => string => string.length === length
